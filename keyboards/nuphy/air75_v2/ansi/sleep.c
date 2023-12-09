@@ -74,7 +74,7 @@ void sleep_handle(void) {
         if (no_act_time >= SLEEP_TIME_DELAY) {
             f_goto_sleep = 1;
         }
-    } else if (rf_linking_time >= LINK_TIMEOUT) {
+    } else if ( (dev_info.link_mode == LINK_RF_24 && rf_linking_time >= LINK_TIMEOUT_RF24) || rf_linking_time >= LINK_TIMEOUT) {
         rf_linking_time = 0;
         f_goto_sleep    = 1;
     }
