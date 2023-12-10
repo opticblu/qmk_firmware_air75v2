@@ -30,7 +30,9 @@ enum custom_keycodes {
     DEV_RESET,
     SLEEP_MODE,
     BAT_SHOW,
-    MAC_DND
+    MAC_DND,
+
+    LINK_TO
 };
 
 typedef enum {
@@ -112,7 +114,7 @@ typedef enum {
 #define HOST_RF_TYPE            2
 
 #define LINK_TIMEOUT            (100 * 120)
-#define LINK_TIMEOUT_RF24       (100 * 5)
+#define LINK_TIMEOUT_ALT        (100 * 5)
 #define SLEEP_TIME_DELAY        (100 * 360)
 #define POWER_DOWN_DELAY        (24)
 

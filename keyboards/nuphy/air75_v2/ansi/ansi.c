@@ -24,6 +24,7 @@ bool f_dev_reset_press  = 0;
 
 uint16_t       rf_linking_time       = 0;
 uint16_t       rf_link_show_time     = 0;
+uint16_t       rf_link_timeout       = LINK_TIMEOUT;
 uint8_t        rf_blink_cnt          = 0;
 uint16_t       no_act_time           = 0;
 uint8_t        rf_sw_temp            = 0;
@@ -587,6 +588,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BAT_SHOW:
             if (record->event.pressed) {
                 f_bat_hold = !f_bat_hold;
+            }
+            return false;
+
+        case LINK_TO:
+            if (record->event.pressed) {
+                if (rf_link_timeout == LINK_TIMEOUT) {
+                    rf_link_timeout = LINK_TIMEOUT_ALT;
+                } else {
+                    rf_link_timeout = LINK_TIMEOUT;
+                }
             }
             return false;
 
