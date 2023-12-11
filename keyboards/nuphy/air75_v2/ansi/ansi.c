@@ -43,6 +43,10 @@ extern uint8_t            side_speed;
 extern uint8_t            side_rgb;
 extern uint8_t            side_colour;
 
+#ifdef NKRO_ENABLE
+extern report_nkro_t     *nkro_report;
+#endif
+
 void    rf_uart_init(void);
 void    rf_device_init(void);
 void    dev_sts_sync(void);

@@ -60,7 +60,7 @@ const uint8_t side_led_index_tab[SIDE_LINE][2] = {
 };
 
 #define SIDE_LED_NUM 12
-LED_TYPE side_leds[SIDE_LED_NUM] = {0};
+rgb_led_t side_leds[SIDE_LED_NUM] = {0};
 
 extern DEV_INFO_STRUCT dev_info;
 extern user_config_t   user_config;
@@ -71,7 +71,7 @@ extern bool            f_sys_show;
 extern bool            f_sleep_show;
 extern bool            f_dev_sleep_enable;
 
-void side_ws2812_setleds(LED_TYPE *ledarray, uint16_t leds);
+void side_ws2812_setleds(rgb_led_t *ledarray, uint16_t leds);
 void rgb_matrix_update_pwm_buffers(void);
 
 /**

@@ -93,22 +93,25 @@ void uart_send_report_func(void) {
 
     if (dev_info.link_mode == LINK_USB) return;
     keyboard_protocol          = 1;
-    keyboard_report->nkro.mods = get_mods() | get_weak_mods();
+    #ifdef NKRO_ENABLE
+    nkro_report->mods = get_mods() | get_weak_mods();
+    #endif
 
-    if ((dev_info.sys_sw_state == SYS_SW_MAC) && (memcmp(bytekb_report_buf, keyboard_report->raw, 8))) {
-        no_act_time             = 0;
-        f_bytekb_active         = 1;
-        keyboard_report->raw[1] = 0;
-        memcpy(bytekb_report_buf, keyboard_report->raw, 8);
+    if ((dev_info.sys_sw_state == SYS_SW_MAC) && (memcmp(bytekb_report_buf, keyboard_report, 8))) {
+        no_act_time               = 0;
+        f_bytekb_active           = 1;
+        keyboard_report->reserved = 0;
+        memcpy(bytekb_report_buf, keyboard_report, 8);
         uart_send_report(CMD_RPT_BYTE_KB, bytekb_report_buf, 8);
     }
-
-    else if ((dev_info.sys_sw_state == SYS_SW_WIN) && (memcmp(bitkb_report_buf, &keyboard_report->nkro.mods, 16))) {
+    #ifdef NKRO_ENABLE
+    else if ((dev_info.sys_sw_state == SYS_SW_WIN) && (memcmp(bitkb_report_buf, &nkro_report->mods, 16))) {
         no_act_time    = 0;
         f_bitkb_active = 1;
-        memcpy(&bitkb_report_buf[0], &keyboard_report->nkro.mods, 16);
+        memcpy(&bitkb_report_buf[0], &nkro_report->mods, 16);
         uart_send_report(CMD_RPT_BIT_KB, bitkb_report_buf, 16);
     }
+    #endif
 
     else if (conkb_report != host_last_consumer_usage()) {
         uart_send_consumer_report();
