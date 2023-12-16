@@ -78,7 +78,7 @@ extern void uart_send_system_report(void);
 
 /* send report */
 void host_keyboard_send(report_keyboard_t *report) {
-    
+
     uart_send_report_func(); 
 
 #ifdef BLUETOOTH_ENABLE
@@ -104,6 +104,9 @@ void host_keyboard_send(report_keyboard_t *report) {
 }
 
 void host_nkro_send(report_nkro_t *report) {
+
+    uart_send_report_func();
+
     if (!driver) return;
     report->report_id = REPORT_ID_NKRO;
     (*driver->send_nkro)(report);
