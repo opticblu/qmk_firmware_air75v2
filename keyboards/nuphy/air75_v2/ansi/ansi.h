@@ -1,5 +1,19 @@
-// Copyright 2023 Persama (@Persama)
-// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+Copyright 2023 @ Nuphy <https://nuphy.com/>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #pragma once
 
@@ -32,7 +46,9 @@ enum custom_keycodes {
     BAT_SHOW,
     MAC_DND,
 
-    LINK_TO
+    LINK_TO,
+    BAT_NUM,
+    RGB_TEST
 };
 
 typedef enum {
@@ -120,6 +136,7 @@ typedef enum {
 
 #define RF_LONG_PRESS_DELAY     30
 #define DEV_RESET_PRESS_DELAY   30
+#define RGB_TEST_PRESS_DELAY    30
 
 typedef struct
 {
@@ -152,6 +169,7 @@ typedef struct
     uint8_t ee_side_speed;
     uint8_t ee_side_rgb;
     uint8_t ee_side_colour;
+    uint8_t sleep_enable;
     uint8_t retain1;
     uint8_t retain2;
 } user_config_t;
