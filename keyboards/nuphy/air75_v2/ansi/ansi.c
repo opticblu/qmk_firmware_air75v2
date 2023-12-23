@@ -43,7 +43,7 @@ uint16_t       no_act_time           = 0;
 uint8_t        rf_sw_temp            = 0;
 uint16_t       dev_reset_press_delay = 0;
 uint16_t       rf_sw_press_delay     = 0;
-uint16_t rgb_test_press_delay        = 0;
+uint16_t       rgb_test_press_delay  = 0;
 uint8_t        host_mode             = 0;
 host_driver_t *m_host_driver         = 0;
 
