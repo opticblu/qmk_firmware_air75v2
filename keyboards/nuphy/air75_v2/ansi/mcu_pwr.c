@@ -38,6 +38,7 @@ static bool side_led_on = 0;
 
 void clear_report_buffer_and_queue(void);
 void side_rgb_refresh(void);
+void rgb_matrix_update_pwm_buffers(void);
 
 /** ================================================================
  * @brief   关闭USB
@@ -278,6 +279,7 @@ void pwr_rgb_led_off(void) {
     gpio_set_pin_output(DC_BOOST_PIN);
     gpio_write_pin_low(DC_BOOST_PIN);
     gpio_set_pin_input(DRIVER_LED_CS_PIN);
+    wait_us(200); // sleep a bit to let the LEDs power up?
     rgb_led_on = 0;
 }
 
@@ -288,6 +290,7 @@ void pwr_rgb_led_on(void) {
     gpio_write_pin_high(DC_BOOST_PIN);
     gpio_set_pin_output(DRIVER_LED_CS_PIN);
     gpio_write_pin_low(DRIVER_LED_CS_PIN);
+    wait_us(200); // sleep a bit to let the LEDs power up?
     rgb_led_on = 1;
 }
 

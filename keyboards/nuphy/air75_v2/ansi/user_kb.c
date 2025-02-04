@@ -35,6 +35,7 @@ bool f_dial_sw_init_ok = 0;
 bool f_rf_sw_press     = 0;
 bool f_dev_reset_press = 0;
 bool f_rgb_test_press  = 0;
+bool f_rgb_led_press   = 0;
 bool f_bat_num_show    = 0;
 
 uint8_t        rf_blink_cnt          = 0;
@@ -46,11 +47,12 @@ uint16_t       no_act_time           = 0;
 uint16_t       dev_reset_press_delay = 0;
 uint16_t       rf_sw_press_delay     = 0;
 uint16_t       rgb_test_press_delay  = 0;
+uint16_t       rgb_led_press_delay   = 0;
 uint16_t       rgb_led_last_act      = 0;
 uint16_t       side_led_last_act     = 0;
 uint16_t       sleep_time_delay      = SLEEP_TIME_DELAY;
 host_driver_t *m_host_driver         = 0;
-RGB            bat_pct_rgb           = {.r = 0x80, .g = 0x80, .b = 0x00};
+rgb_t          bat_pct_rgb           = {.r = 0x80, .g = 0x80, .b = 0x00};
 
 extern host_driver_t rf_host_driver;
 
@@ -160,6 +162,15 @@ void long_press_key(void) {
         }
     } else {
         rgb_test_press_delay = 0;
+    }
+
+    if (f_rgb_led_press) {
+        rgb_led_press_delay++;
+        if (rgb_led_press_delay >= 15) { // 1.5 seconds
+            pwr_rgb_led_on();
+        }
+    } else {
+        rgb_led_press_delay = 0;
     }
 }
 
@@ -477,7 +488,7 @@ void update_bat_pct_rgb(uint8_t bat_percent) {
         h = 43; // yellow
     }
 
-    HSV hsv = {
+    hsv_t hsv = {
         .h = h,
         .s = 255,
         .v = 128, // 50% max brightness
