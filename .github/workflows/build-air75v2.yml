@@ -1,0 +1,38 @@
+name: Build Air75 V2 Firmware
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - air75v2-sleep
+    paths:
+      - keyboards/nuphy/air75_v2/ansi/**
+      - .github/workflows/build-air75v2.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/qmk/qmk_cli
+
+    steps:
+      - name: Disable safe.directory check
+        run: git config --global --add safe.directory '*'
+
+      - name: Checkout QMK Firmware
+        uses: actions/checkout@v4
+
+      - name: Deploy submodules
+        run: qmk git-submodule -f
+
+      - name: Build firmware
+        run: qmk compile -kb nuphy/air75_v2/ansi -km via
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: air75v2-via-firmware
+          if-no-files-found: error
+          path: "*.bin"
