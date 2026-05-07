@@ -31,6 +31,14 @@ jobs:
         with:
           ref: ${{ inputs.target_ref || github.sha }}
 
+      - name: Install Python requirements
+        run: |
+          if [ -x /opt/uv/tools/qmk/bin/python3 ]; then
+            /opt/uv/tools/qmk/bin/python3 -m pip install -r requirements.txt
+          else
+            python3 -m pip install -r requirements.txt
+          fi
+
       - name: Deploy submodules
         run: qmk git-submodule -f
 
