@@ -2,6 +2,11 @@ name: Build Air75 V2 Firmware
 
 on:
   workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Commit or branch to build
+        required: false
+        default: ""
   push:
     branches:
       - air75v2-sleep
@@ -23,6 +28,8 @@ jobs:
 
       - name: Checkout QMK Firmware
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref || github.sha }}
 
       - name: Deploy submodules
         run: qmk git-submodule -f
